@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Spam Detection Result</title>
+    <style>
+        /* Global Reset & Theme */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0f, #1a1a2e, #16213e);
+            color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            padding: 25px 10px;
+            background: rgba(15, 15, 25, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            font-size: 1.9rem;
+            color: #00f5ff;
+            text-shadow: 0 0 15px #00f5ff;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            background-color: rgba(30, 30, 50, 0.9);
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            background: linear-gradient(90deg, #3a0ca3, #4361ee);
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: linear-gradient(90deg, #00b4d8, #48cae4);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #00b4d8;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .content {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .content h2 {
+            text-align: center;
+            font-size: 1.6rem;
+            color: #00f5ff;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        .result-box {
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.4);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .result-box h3 {
+            font-size: 1.3rem;
+            color: #00f5ff;
+            text-shadow: 0 0 10px #00f5ff;
+        }
+
+        .email-text {
+            background: rgba(255, 255, 255, 0.07);
+            border-left: 4px solid #00f5ff;
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+        }
+
+        .student-details {
+            margin-top: 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .student-details h2 {
+            color: #48cae4;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .student-details p {
+            font-size: 1rem;
+            color: #ddd;
+            margin-bottom: 10px;
+        }
+
+        .skills {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.07);
+            border-left: 4px solid #48cae4;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .skills h3 {
+            color: #00f5ff;
+            margin-bottom: 10px;
+        }
+
+        .linkedin-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #0077b5, #00b4d8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .linkedin-btn:hover {
+            background: linear-gradient(90deg, #00b4d8, #48cae4);
+            box-shadow: 0 0 15px #00b4d8;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: rgba(15, 15, 25, 0.95);
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9rem;
+            color: #bbb;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        footer span {
+            color: #00f5ff;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content { padding: 20px; }
+            .student-details { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Email Spam Detection Result</h1>
+    </header>
+
+    <nav>
+        <a href="/">🏠 Home</a>
+        <a href="#student">👨‍💻 Developer</a>
+    </nav>
+
+    <main>
+        <div class="content">
+            <h2>Detection Summary</h2>
+
+            <p><strong>Email Text:</strong></p>
+            <div class="email-text">{{ email }}</div>
+
+            <div class="result-box">
+                <h3>Result: {{ result }}</h3>
+                {% if result == "Ham" %}
+                    <p>This means the text is <strong>normal</strong>.</p>
+                {% else %}
+                    <p>This means the text is <strong>Spam</strong>.</p>
+                {% endif %}
+            </div>
+
+            <div class="student-details" id="student">
+                <h2>About the Developer</h2>
+                <p><strong>Ritik Kumar</strong></p>
+                <p>Email: ritikgangwar0987@gmail.com</p>
+
+                <div class="skills">
+                    <h3>Skills Covered in this Project:</h3>
+                    <ul>
+                        <li>Django Web Framework</li>
+                        <li>AI Prompt Engineering</li>
+                        <li>TensorFlow 2.18.0</li>
+                        <li>Scikit-Learn (Naive Bayes + Bag of Words)</li>
+                        <li>Pandas & NumPy</li>
+                        <li>Hybrid Spam Detection Logic (Rules + ML)</li>
+                    </ul>
+                </div>
+
+                <br>
+                <a href="https://www.linkedin.com/in/ritikkumarg/" target="_blank" class="linkedin-btn">View LinkedIn</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 <span>Spam Detector</span> | Created by Ritik Kumar using Django, TensorFlow, Scikit-Learn, Pandas & NumPy — a hybrid model (Naive Bayes + Bag-of-Words + Custom Rules) built with help of AI and personal knowledge.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,5 @@
+Django
+tensorflow==2.18.0
+scikit-learn
+pandas
+numpy

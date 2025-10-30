@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*~
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Django specific
+db.sqlite3
+/media
+/static_root # Collected static files
+
+# Security/Secrets (CRITICAL)
+# Ignore any local secret files. Use environment variables for deployment.
+local_settings.py
+.env
+
+# AI/ML Specific
+# Ignore large data/model files (if over 100MB). 
+# List the actual file names here, e.g., my_model.h5
+# *.h5
+# *.pt
+# raw_datasets/

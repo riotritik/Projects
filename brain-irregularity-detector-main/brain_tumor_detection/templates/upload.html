@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Upload Image</title>
+	{%load static%}
+	<link rel="stylesheet" href={% static 'upload.css' %}>
+	<link rel="stylesheet" href={% static "style.css" %}>
+	<script src="index.js"></script>
+</head>
+
+<body>
+	<header>
+		<h1>Brain Tumor Detection</h1>
+		<nav>
+			<ul>
+				<li><a href="{% url 'upload_image' %}">Home</a></li>
+				<li><a href="#">Contact</a></li>
+				<li><a href="{% url 'about_devops' %}">Developers</a></li>
+			</ul>
+		</nav>
+	</header>
+<!-- 
+	<h1 class="up1">Upload an Image</h1> -->
+	<div class="hero">
+		<form method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			<label clas="up_lbl">
+				<p class="up_para">
+					<button>
+						Select your MRI here:
+						<input type="file" name="image" value="Select" id="up_img" title="choose file here ">
+					</button>
+				</p>
+			</label>
+			<label clas="up_lbl">
+				<p class="up_para">
+					Click to find the Result
+					<input type="submit" value="Upload Image" id="up_sub" title="click to find result">
+				<p>
+			</label>
+		</form>
+	</div>
+
+	<section class="about">
+		<h2>About Brain Tumor Detection</h2>
+		<p>Brain tumor detection is the process of identifying the presence of tumors in the brain. It is a critical
+			process that can help in the early diagnosis and treatment of brain cancer. Our team of experts uses the
+			latest technology and techniques to provide accurate brain tumor detection services.</p>
+	</section>
+<!-- 
+	<section class="contact">
+		<h2>Contact Us</h2>
+		<form>
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name">
+			<label for="email">Email:</label>
+			<input type="email" id="email" name="email">
+			<label for="message">Message:</label>
+			<textarea id="message" name="message"></textarea>
+			<button>Submit</button>
+		</form>
+	</section> -->
+
+	<section class="testimonials">
+		<h2>Testimonials</h2>
+		<ul>
+			<li>
+				<img src="testimony1.jpg" alt="Testimonial 1">
+				<p>"I was diagnosed with a brain tumor, and thanks to the early detection services provided by Brain
+					Tumor Detection, I was able to receive treatment quickly and effectively."</p>
+				<p>- John Smith</p>
+			</li>
+			<li>
+				<img src="testimony2.jpg" alt="Testimonial 2">
+				<p>"The team at Brain Tumor Detection was incredibly knowledgeable and professional. They made me feel
+					at ease throughout the entire detection and treatment process."</p>
+				<p>- Jane Doe</p>
+			</li>
+		</ul>
+	</section>
+
+	<section class="faq">
+		<h2>Frequently Asked Questions</h2>
+		<ul>
+			<li>
+				<h3>What is brain tumor detection?</h3>
+				<p>Brain tumor detection is the process of identifying the presence of tumors in the brain. It is a
+					critical process that can help in the early diagnosis and treatment of brain cancer.</p>
+			</li>
+			<li>
+				<h3>How is brain tumor detection performed?</h3>
+				<p>Brain tumor detection can be performed using a variety of imaging tests, such as magnetic resonance
+					imaging (MRI) and computed tomography (CT) scans.</p>
+			</li>
+			<li>
+				<h3>What are the symptoms of brain tumors?</h3>
+				<p>The symptoms of brain tumors can vary depending on their location and size, but may include
+					headaches, seizures, vision changes, and difficulty with balance and coordination.</p>
+			</li>
+		</ul>
+	</section>
+
+	<footer>
+		{% block content %}
+		{% endblock %}
+
+	</footer>
+
+</body>
+
+{% include 'footer.html' %}
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Our Developers</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'dev.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <header>
+        <h1 style="color:white;">Brain Tumor Detection</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'upload_image' %}">Home</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="{% url 'about_devops' %}">Developers</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1 style="text-align : center;">Meet Our Developers</h1>
+    <div id="developers">
+        <div class="developer">
+            <div class="developer-img-container">
+                <img src="{{ developer.image }}" alt="" class="developer-img">
+            </div>
+            <h2 class="developer-name"></h2>
+            <p class="developer-role"></p>
+            <p class="developer-message"></p>
+            <div class="social-media-icons">
+
+                <a href="https://www.linkedin.com/in/aadi-agarwal-37108124a/" target="_blank"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/aadi__agarwal/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="developer">
+            <div class="developer-img-container">
+                <img src="{{ developer.image }}" alt="" class="developer-img">
+            </div>
+            <h2 class="developer-name"></h2>
+            <p class="developer-role"></p>
+            <p class="developer-message"></p>
+            <div class="social-media-icons">
+
+                <a href="https://www.linkedin.com/in/ritik-kumar-5052b4220/" target="_blank"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/ig_ritlk/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+
+
+    </div>
+    <script>
+        const developers = [
+            {
+                name: 'Aadi Agarwal',
+                image: "{% static 'img/Aadi.jpeg' %}",
+                role: 'AI / ML Engineer',
+                message: "Hi, I'm Aadi Agarwal and I'm currently pursuing BCA in Artificial Intelligence from Invertis University, Bareilly. I worked on the AI/ML part of this project (model training, preprocessing, and evaluation)."
+            },
+            {
+                name: 'Ritik Kumar',
+                image: "{% static 'img/Ritik.jpeg' %}",
+                role: 'Full‑stack Developer (Django)',
+                message: "Hi, I'm Ritik Kumar and I'm currently pursuing BCA in Cloud Computing from Invertis University, Bareilly. I worked as the full‑stack developer using Django (backend, templates, and integration)."
+            }
+
+            // Add more developers here
+        ];
+
+        const developerElements = document.querySelectorAll('.developer');
+        developerElements.forEach((developerElement, index) => {
+            const developer = developers[index];
+            if (!developer) return;
+            developerElement.querySelector('.developer-img').src = developer.image;
+            developerElement.querySelector('.developer-img').alt = developer.name;
+            developerElement.querySelector('.developer-name').textContent = developer.name;
+            const roleEl = developerElement.querySelector('.developer-role');
+            if (roleEl) roleEl.textContent = developer.role || '';
+            developerElement.querySelector('.developer-message').textContent = developer.message;
+        });
+
+    </script>
+    <footer>
+        {% block content %}
+        {% endblock %}
+    </footer>
+</body>
+{% include 'footer.html' %}
+</html>

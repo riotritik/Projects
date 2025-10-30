@@ -1,0 +1,39 @@
+body{
+    background-color: #f2f2f2;
+}
+
+div{
+    text-align: center;
+}
+
+#back{
+    /* float: left; */
+    padding-left: 5%;
+    padding-right: 5%;
+    cursor: pointer;
+    font-size: large;
+
+}
+
+#back a{
+    text-decoration: none;
+    color: red;
+    
+}
+
+
+#rs_p{
+    font-weight: 500;
+    font: large;
+    color:#2F2F2F;
+}
+
+#img_rs{
+    width: 20%;
+    height:20%;
+}
+
+.rs_pr{
+    color:#2F2F2F;
+    font-size: large;
+}

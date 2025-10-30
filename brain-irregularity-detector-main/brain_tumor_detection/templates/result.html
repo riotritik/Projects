@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Result</title>
+  {%load static%}
+  <link rel="stylesheet" href={% static 'result.css' %}>
+  <link rel="stylesheet" href={% static "style.css" %}>
+</head>
+
+<body>
+  {% if last_detector %}
+    <div>
+      <h1> 👨‍⚕️ RESULT 👨‍⚕️</h1>
+
+      <H2 id="rs_p">Image you chose :</H2>
+      
+      <img src="{{last_detector.image.url}}" alt="image undisplayable" id="img_rs"></img>
+      
+      {% if last_detector.result %}
+        <H3 class="rs_pr"> {{ last_detector.result }}</H3>
+        {% else %}
+        <p class="rs_pr">No result available.</p>
+      {% endif %}
+      
+      <h1>
+        <button id="back"><a href="{% url 'upload_image' %}">BACK</a></button>
+      </h1>
+    </div>
+  {% endif %}
+</body>
+</html>
