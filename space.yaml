@@ -1,0 +1,7 @@
+---
+# This file forces Hugging Face to use your external GitHub repo and Dockerfile path.
+# It acts as the permanent configuration file for the Space.
+external:
+  url: https://github.com/riotritik/Projects
+  target_subfolder: brain-irregularity-detector-main/brain_tumor_detection
+---
