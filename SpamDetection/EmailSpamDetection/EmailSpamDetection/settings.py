@@ -11,22 +11,24 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os # Keep this import
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent  # Fixed typo in _file_
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3%-umuq1igmldik$8%f7jfl5w&g#ovl_von$d2h5smb=s%uq=_'
+# ⚠️ BEST PRACTICE: Get SECRET_KEY from environment variables on Render
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-3%-umuq1igmldik$8%f7jfl5w&g#ovl_von$d2h5smb=s%uq=_')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False # **FIXED: Must be False for production.**
 
-DEBUG = False
-
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS
+# ⚠️ BEST PRACTICE: Get Allowed Hosts from environment variables on Render
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',') # **FIXED: Use environment variable, fallback to '*'**
 
 
 # Application definition
@@ -42,8 +44,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # Security Middleware must be at the top
     'django.middleware.security.SecurityMiddleware',
-     'whitenoise.middleware.WhiteNoiseMiddleware', 
+    # WhiteNoise must be placed directly after SecurityMiddleware
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -58,7 +62,7 @@ ROOT_URLCONF = 'EmailSpamDetection.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Ensure 'templates' folder exists at this path
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,8 +79,8 @@ WSGI_APPLICATION = 'EmailSpamDetection.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+# ⚠️ WARNING: SQLite (db.sqlite3) will lose data on Render's Free Plan restarts.
+# You should use PostgreSQL for persistent data.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -117,9 +121,26 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# Configuration for WhiteNoise is added here for production deployment.
+# ----------------------------------------------------------------------
 
+# 1. Base static URL
 STATIC_URL = 'static/'
+
+# 2. **FIXED: Define STATIC_ROOT for `collectstatic`**
+# This is the directory where all static files will be collected for WhiteNoise.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# 3. **FIXED: Configure WhiteNoise storage backend for efficiency**
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        # This backend compresses static files and adds cache-busting filenames (manifest).
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
