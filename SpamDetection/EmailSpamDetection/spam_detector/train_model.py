@@ -1,56 +1,102 @@
+# spam_detector/train_model.py
+
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline, FeatureUnion
+from sklearn.metrics import recall_score, f1_score, accuracy_score
+from sklearn.preprocessing import StandardScaler
 import joblib
 import os
+import sys
 
-# Load dataset
-dataset_path = os.path.join(os.path.dirname(__file__), 'dataset', 'spam.csv')
+# --- Set up Path and Imports ---
+# Assumes feature_extractor.py is in the same directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(BASE_DIR)
+
+# Import custom feature extractor
+from feature_extractor import NonTextualFeatures 
+
+# Define paths relative to the current script
+dataset_path = os.path.join(BASE_DIR, 'dataset', 'spam.csv')
+model_path = os.path.join(BASE_DIR, 'spam_model.pkl')
+vectorizer_path = os.path.join(BASE_DIR, 'vectorizer.pkl') # Note: We save the full pipeline here
+
+# --- Data Loading and Preprocessing ---
 data = pd.read_csv(dataset_path, encoding='latin-1')
 
-# Preprocess data
+# Keep only the required columns and rename
 data = data[['v1', 'v2']]
 data.columns = ['label', 'message']
+
+# Encode labels: 'ham' as 0, 'spam' as 1
 data['label'] = data['label'].map({'ham': 0, 'spam': 1})
 
-# Custom Spam Rule Function
-def custom_spam_rule(text):
-    spam_keywords = ['join my group', 'earn money', 'click here', 'make money', 'free gift', 'limited offer']
-    for keyword in spam_keywords:
-        if keyword in text.lower():
-            return 1  # Flag as Spam
-    return 0  # Flag as Ham
-
-# Apply custom rule to label data
-data['custom_spam_label'] = data['message'].apply(custom_spam_rule)
-
-# Prepare features and labels
 X = data['message']
 y = data['label']
 
-# Vectorize text
-vectorizer = CountVectorizer()
-X = vectorizer.fit_transform(X)
+# Split data into training and testing sets (stratify ensures equal label proportions)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, 
+    test_size=0.2, 
+    random_state=42, 
+    stratify=y
+)
 
-# Split data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# --- Define the Hybrid Pipeline Components ---
 
-# Train model
-model = MultinomialNB()
-model.fit(X_train, y_train)
+# 1. Text-based Pipeline (TF-IDF Vectorization)
+text_pipeline = Pipeline([
+    ('tfidf', TfidfVectorizer(
+        stop_words='english',
+        ngram_range=(1, 2),  # Use 1-grams and 2-grams (e.g., 'click here')
+        max_features=5000     # Keep top 5000 features
+    ))
+])
 
-# Evaluate model
-predictions = model.predict(X_test)
+# 2. Non-Textual Feature Pipeline
+non_text_pipeline = Pipeline([
+    ('non_text_features', NonTextualFeatures()),
+    ('scaler', StandardScaler())  # Scale numerical features (important for LogReg)
+])
+
+# 3. Combine Features using FeatureUnion
+feature_union = FeatureUnion([
+    ('text_features', text_pipeline),
+    ('extra_features', non_text_pipeline)
+])
+
+# 4. Final Classifier Pipeline
+model_pipeline = Pipeline([
+    ('features', feature_union),
+    ('clf', LogisticRegression(
+        solver='liblinear',
+        class_weight='balanced',  # CRUCIAL for optimizing RECALL on imbalanced data
+        random_state=42
+    ))
+])
+
+# --- Training and Evaluation ---
+print("Starting hybrid model training...")
+model_pipeline.fit(X_train, y_train)
+print("Training complete.")
+
+# Predict and Evaluate
+predictions = model_pipeline.predict(X_test)
+
+# Calculate key metrics
 accuracy = accuracy_score(y_test, predictions)
-print(f'Model Accuracy: {accuracy * 100:.2f}%')
+recall = recall_score(y_test, predictions)
+f1 = f1_score(y_test, predictions)
 
-# Save model and vectorizer
-model_path = os.path.join(os.path.dirname(__file__), 'spam_model.pkl')
-vectorizer_path = os.path.join(os.path.dirname(__file__), 'vectorizer.pkl')
+print(f'\nHybrid Model Accuracy: {accuracy * 100:.2f}%')
+print(f'Hybrid Model RECALL (Catching Spam): {recall * 100:.2f}%')
+print(f'Hybrid Model F1-Score: {f1:.4f}')
 
-joblib.dump(model, model_path)
-joblib.dump(vectorizer, vectorizer_path)
-
-print("Model and vectorizer saved successfully!")
+# --- Save Model Pipeline ---
+# Save the entire pipeline, including the feature extractors, for prediction.
+joblib.dump(model_pipeline, model_path)
+print("\nModel pipeline saved successfully to spam_model.pkl!")
+# Note: The vectorizer_path variable is unused but kept for consistency.
