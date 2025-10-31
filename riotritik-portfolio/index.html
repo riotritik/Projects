@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ritik Kumar | AI & Full-Stack Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* --- VARIABLES (LIGHT THEME) --- */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --accent-color: #007bff;
+            --link-hover: #0056b3;
+            --section-bg: #f5f5f5;
+            --btn-bg: #00bcd4;
+            --font-mono: 'Roboto Mono', monospace;
+            --font-sans: 'Roboto', sans-serif;
+        }
+        
+        /* --- BASE STYLES --- */
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding-top: 60px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        /* --- CODING ANIMATION BACKGROUND (OPACITY INCREASED) --- */
+        #code-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3; /* Increased for visibility */
+            background: 
+                repeating-linear-gradient(
+                    0deg, 
+                    var(--accent-color), 
+                    var(--accent-color) 1px, 
+                    transparent 1px, 
+                    transparent 40px
+                ),
+                repeating-linear-gradient(
+                    90deg, 
+                    var(--accent-color), 
+                    var(--accent-color) 1px, 
+                    transparent 1px, 
+                    transparent 40px
+                );
+            background-size: 40px 40px;
+            animation: flowCode 120s linear infinite;
+        }
+
+        @keyframes flowCode {
+            from { background-position: 0 0; }
+            to { background-position: 400px 400px; }
+        }
+        
+        /* --- SCROLL-TO-TOP BUTTON STYLES --- */
+        #scroll-to-top-btn {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: var(--accent-color);
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 18px;
+            box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+            transition: opacity 0.3s;
+        }
+        
+        #scroll-to-top-btn:hover {
+            background-color: var(--link-hover);
+        }
+        
+        /* --- NAVBAR STYLES (Existing) --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-color); 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 10px 0;
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar-link {
+            font-family: var(--font-mono);
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 8px 15px;
+            margin: 0 5px;
+            transition: color 0.3s, background-color 0.3s;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .navbar-link:hover {
+            color: var(--bg-color);
+            background-color: var(--accent-color);
+        }
+
+        /* --- HEADER STYLES (Alignment Fixed) --- */
+        header {
+            padding: 50px 20px;
+            background-color: var(--section-bg);
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            text-align: center; /* Essential for centering all child elements */
+        }
+
+        header h1 {
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+            margin-bottom: 5px;
+            font-size: 2.5em;
+        }
+
+        header p.tagline {
+            color: var(--btn-bg);
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 0;
+        }
+
+        .about-details {
+            max-width: 800px;
+            margin: 20px auto 0;
+            text-align: center;
+            color: #555;
+        }
+
+        /* --- SECTION STYLES (Existing) --- */
+        .section {
+            padding: 40px 20px;
+            margin-bottom: 20px;
+            background-color: var(--section-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .section h2 {
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        
+        /* --- PROJECTS STYLES (Existing) --- */
+        .project-item {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-left: 3px solid var(--btn-bg);
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .project-links a {
+            display: inline-block;
+            margin-top: 15px;
+            margin-right: 15px;
+            padding: 10px 20px;
+            background-color: var(--btn-bg);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+        }
+
+        .project-links a:hover {
+            background-color: #0096a9;
+        }
+
+        /* --- SKILLS STYLES (Existing) --- */
+        ul.skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul.skills-list li {
+            background-color: #e0e0e0;
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+        }
+
+        /* --- CERTIFICATION STYLES (Existing) --- */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .cert-item {
+            padding: 15px;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            border-left: 3px solid var(--accent-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cert-item p {
+            margin: 0 0 10px 0;
+        }
+
+        .cert-verify-link {
+            color: var(--accent-color); 
+            text-decoration: none; 
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            transition: color 0.3s;
+        }
+
+        .cert-verify-link:hover {
+            color: var(--link-hover);
+        }
+
+        /* --- CONTACT/FOOTER STYLES (Existing) --- */
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.5em;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            margin-top: 30px;
+            background-color: #eee;
+        }
+        
+        /* --- RESPONSIVENESS (Existing) --- */
+        @media (max-width: 768px) {
+            .navbar-content {
+                justify-content: space-between;
+                padding: 0 10px;
+            }
+            .navbar-link {
+                padding: 6px 10px;
+                margin: 0 2px;
+                font-size: 0.7em;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+            .cert-grid {
+                grid-template-columns: 1fr;
+            }
+            .project-links {
+                display: flex;
+                flex-direction: column;
+            }
+            .project-links a {
+                margin-right: 0;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="code-animation"></div>
+
+    <button onclick="topFunction()" id="scroll-to-top-btn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="#about" class="navbar-link">About</a>
+            <a href="#working" class="navbar-link">Focus</a>
+            <a href="#projects" class="navbar-link">Projects</a>
+            <a href="#skills" class="navbar-link">Skills</a>
+            <a href="#certs" class="navbar-link">Certs</a>
+            <a href="#resume" class="navbar-link">Contact</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        
+        <header id="about">
+            <h1>Ritik Kumar</h1>
+            <p class="tagline">Advanced AI/ML & Secure Django Full-Stack Developer</p> 
+            <div class="about-details">
+                <p>My Name is Ritik Kumar and I'm from Bareilly.</p>
+                <p>I completed my Bachelor of Computer Application (Cloud Computing - BCA) with 8.9 CGPA from Invertis University, Bareilly.</p>
+                <p>I am currently pursuing a Master of Computer Applications (MCA) from Galgotias University.</p>
+                <p style="margin-top: 25px; color: #555;">A dedicated and passionate professional with a strong foundation in Cloud Computing and Web Development, currently developing several AI and ML projects with startup potential.</p>
+            </div>
+        </header>
+
+        <section class="section" id="working">
+            <h2><span style="color: var(--accent-color);">[</span> Currently Focused On <span style="color: var(--accent-color);">]</span></h2>
+            <div class="project-item">
+                <h3>Advanced Mental Health AI with ML</h3>
+                <p>This is my primary project focus: developing a secure, production-ready Django-based platform for mental health support. It features three dashboards (User, Doctor, Admin) and utilizes high-quality, free, and commercially usable AI/ML models. The application supports user interaction in both Hindi and English.</p>
+                <div class="project-links">
+                    <a href="#" target="_blank">Live Demo (Coming Soon on Render!)</a>
+                    <a href="https://github.com/riotritik/Projects" target="_blank">Source Code (GitHub)</a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2><span style="color: var(--accent-color);">[</span> Dream Projects <span style="color: var(--accent-color);">]</span></h2>
+            <p style="font-size: 1.2em; text-align: center; margin-bottom: 20px;">AI Ecosystem</p>
+            <p style="text-align: center;">Developing a comprehensive AI-driven ecosystem that integrates multiple ML models for real-world applications and societal benefit.</p>
+            <p style="text-align: center; margin-top: 30px;">For any details, please reach me at: <a href="mailto:ritikgangwar0987@gmail.com" style="color: var(--accent-color);">ritikgangwar0987@gmail.com</a></p>
+        </section>
+
+        <section class="section" id="projects">
+            <h2><span style="color: var(--accent-color);">[</span> Other Projects <span style="color: var(--accent-color);">]</span></h2>
+            
+            <div class="project-item">
+                <h3>Detecting Brain Irregularities (Full-Stack)</h3>
+                <p>Full-stack deployment of an AI model designed to detect irregularities in the brain, such as tumors or fluid accumulation.</p>
+                <div class="project-links">
+                    <a href="#" target="_blank">Live Demo (Coming Soon!)</a>
+                    <a href="#" target="_blank">Source Code (GitHub)</a>
+                </div>
+            </div>
+            
+            <div class="project-item">
+                <h3>Spam Detection (Machine Learning)</h3>
+                <p>Developed a spam detection system using a hybrid machine learning approach.</p>
+                <div class="project-links">
+                    <a href="#" target="_blank">Live Demo (Coming Soon!)</a>
+                    <a href="#" target="_blank">Source Code (GitHub)</a>
+                </div>
+            </div>
+            
+            <div class="project-item">
+                <h3>Smart Dustbin (IoT)</h3>
+                <p>Programmed an Internet of Things (IoT) application.</p>
+                <div class="project-links">
+                    <a href="#" target="_blank">Live Demo (Coming Soon!)</a>
+                    <a href="#" target="_blank">Source Code (GitHub)</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="skills">
+            <h2><span style="color: var(--accent-color);">[</span> Skill Set <span style="color: var(--accent-color);">]</span></h2>
+            <ul class="skills-list">
+                <li>Python</li>
+                <li>C</li>
+                <li>Django web framework</li>
+                <li>SQL</li>
+                <li>AI and ML (Basic understanding)</li>
+                <li>EC2 instances on AWS</li>
+                <li>Virtualization</li>
+                <li>HTML, CSS, JavaScript</li>
+                <li>MySQL</li>
+                <li>Oracle</li>
+                <li>Windows, MacOS, Linux</li>
+                <li>AI Prompt Engineering</li>
+                <li>AI Tools</li>
+                <li>Building and programming IoT applications</li>
+            </ul>
+        </section>
+
+        <section class="section" id="certs">
+            <h2><span style="color: var(--accent-color);">[</span> Certifications & Accomplishments <span style="color: var(--accent-color);">]</span></h2>
+            
+            <div class="cert-grid">
+                
+                <div class="cert-item">
+                    <p><strong>Python certification</strong> (GUVI HCL)</p>
+                    <a href="https://www.guvi.in/share-certificate/17qVYy169St6r95953" target="_blank" class="cert-verify-link">Show Credentials 🔗</a>
+                </div>
+                
+                <div class="cert-item">
+                    <p><strong>AI for India 2.0</strong> (GUVI HCL)</p>
+                    <a href="https://www.guvi.in/share-certificate/Zi1A295H4t0c962174" target="_blank" class="cert-verify-link">Show Credentials 🔗</a>
+                </div>
+                
+                <div class="cert-item">
+                    <p><strong>Journey to Cloud: Envisioning Your Solution</strong> (IBM)</p>
+                    <a href="https://www.credly.com/badges/d256980b-9eda-485a-b604-39132e838def/public_url" target="_blank" class="cert-verify-link">Show Credentials 🔗</a>
+                </div>
+                 
+                <div class="cert-item">
+                    <p><strong>AWS Educate Getting Started with Compute - Training Badge</strong></p>
+                    <a href="https://www.credly.com/badges/5ac6f46d-fdb8-4b52-a6d4-bae9f246f130/linked_in_profile" target="_blank" class="cert-verify-link">Show Credentials 🔗</a>
+                </div>
+                
+                <div class="cert-item">
+                    <p><strong>MySQL Essential Training</strong> (LinkedIn Learning)</p>
+                    <a href="https://www.linkedin.com/learning/certificates/c9118ed1f85507d8cd745b327f0cbb1bfe7ee78f19ab8f16cb32c56d92a52b3e" target="_blank" class="cert-verify-link">Show Credentials 🔗</a>
+                </div>
+                
+                <div class="cert-item">
+                    <p><strong>Networking Foundations: Networking Basics</strong> (LinkedIn Learning)</p>
+                    <a href="https://www.linkedin.com/learning/certificates/b37cd347ef38d45fa83324e88229f3907f1c7334600afda05efd26b9cac8cac1" target="_blank" class="cert-verify-link">Show Credentials 🔗</a></p>
+                </div>
+                
+                <div class="cert-item">
+                    <p><strong>Python Essential Training</strong> (LinkedIn Learning)</p>
+                    <a href="https://www.linkedin.com/learning/certificates/465de25d6a2fc2ec8af7c1e55cc026a0f0204116c6ddac3d6d3d28f2b3003a85" target="_blank" class="cert-verify-link">Show Credentials 🔗</a></p>
+                </div>
+
+                <div class="cert-item">
+                    <p><strong>NumPy Essential Training: Foundations</strong> (LinkedIn Learning)</p>
+                    <a href="https://www.linkedin.com/learning/certificates/94834b288cbcd8434324cbec5a76e7960f85bb50838cdb66a20adc82727b0d24" target="_blank" class="cert-verify-link">Show Credentials 🔗</a></p>
+                </div>
+                
+                <div class="cert-item">
+                    <p><strong>Getting Started With Python</strong> (LinkedIn Learning)</p>
+                    <a href="https://www.linkedin.com/learning/certificates/b6019948c253323bc7c2c79d92155e32119f5aa2645cc5eaa911749b8c84b081" target="_blank" class="cert-verify-link">Show Credentials 🔗</a></p>
+                </div>
+                
+                <div class="cert-item">
+                    <p><strong>Develop Your Communication Skills</strong> (LinkedIn Learning)</p>
+                    <a href="https://www.linkedin.com/learning/certificates/13a1035c0e97281df8460c6e3aa48d2b6ff40031d2aed1f115916656a3f66cd4" target="_blank" class="cert-verify-link">Show Credentials 🔗</a></p>
+                </div>
+
+                <div class="cert-item">
+                    <p>Won 2nd place in a departmental MySQL contest</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="resume" style="text-align: center;">
+            <h2><span style="color: var(--accent-color);">[</span> Contact & Resume <span style="color: var(--accent-color);">]</span></h2>
+            
+            <p style="margin-bottom: 20px;">Connect with me across platforms or download my full resume.</p>
+            
+            <div class="social-links" style="margin-bottom: 30px;">
+                <a href="https://www.linkedin.com/in/ritikkumarg/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:ritikgangwar0987@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/riotritik" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.instagram.com/your_instagram_handle" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+
+            <a href="Ritik_Kumar.pdf" download class="resume-btn" style="background-color: var(--btn-bg);">DOWNLOAD RITIK'S RESUME (PDF)</a>
+            <p style="margin-top: 20px; font-size: 0.9em; color: #555;">Mobile: +91 7078622710</p>
+        </section>
+
+        <footer>
+            <p>Built by Ritik Kumar | &copy; 2024. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Get the button
+        let mybutton = document.getElementById("scroll-to-top-btn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+    </script>
+</body>
+</html>

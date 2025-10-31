@@ -23,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent  # Fixed typo in _file_
 SECRET_KEY = 'django-insecure-3%-umuq1igmldik$8%f7jfl5w&g#ovl_von$d2h5smb=s%uq=_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+DEBUG = False
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+     'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -49,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'EmailSpamDetection.urls'
 
