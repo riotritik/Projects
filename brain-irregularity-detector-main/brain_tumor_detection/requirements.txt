@@ -19,7 +19,10 @@ six==1.17.0
 tzdata==2025.2
 wheel==0.45.1
 zstandard==0.23.0
-
+# --- MANDATORY DJANGO/DEPLOYMENT PACKAGES ---
+Django==4.2.14 # Use the specific version you developed with
+gunicorn
+whitenoise
 
 
 
