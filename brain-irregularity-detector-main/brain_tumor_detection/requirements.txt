@@ -19,15 +19,9 @@ six==1.17.0
 tzdata==2025.2
 wheel==0.45.1
 zstandard==0.23.0
-
---- ML LIBRARIES ADDED TO FIX KERAS ERROR ---
-
 tensorflow==2.15.0
-keras # Ensures the Keras module is visible for older import methods
+keras
 scikit-learn
-
---- MANDATORY DJANGO/DEPLOYMENT PACKAGES ---
-
 Django==4.2.14
 gunicorn
 whitenoise
